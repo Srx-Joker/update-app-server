@@ -8,12 +8,13 @@ export class JsonFileStorage extends BaseFileStore {
     
     constructor(private jsonPath: string, private fileDir: string) {
         super();
+        // 初始化文件
         if(!existsSync(this.jsonPath)){
             writeFileSync(jsonPath, `
             {
                 "latest": "0.0.0",
                 "versions": {
-                    
+
                 }
             }`
             );
@@ -25,6 +26,7 @@ export class JsonFileStorage extends BaseFileStore {
 
     }
 
+    // 版本号对应的文件
     private Versions: {
         latest: string,
         versions: {

@@ -6,14 +6,20 @@ export class Tools{
      * @returns 版本号数字
      */
     private static parseVersion(version : string):number{
+        // 版本号为空
         if(version == null || version == undefined || version == ""){
             return 0;
         }
+
+        // 版本号不是字符串
         let versionArr = version.split(".");
         let versionNum = 0;
+
+        // 版本号不是数字
         for(let i = 0; i < versionArr.length; i++){
             versionNum += Number(versionArr[i]) * Math.pow(10, (versionArr.length - i - 1) * 2);
         }
+        
         return versionNum;
 
     }
