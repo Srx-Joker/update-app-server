@@ -1,5 +1,5 @@
 import { BaseFileStore } from "./BaseFileStorage";
-import { existsSync, mkdirSync, writeFileSync, readFile, writeFile, unlink } from "fs"
+import { existsSync, mkdirSync, writeFileSync, readFile, readFileSync, writeFile, unlink } from "fs"
 import * as uuid from "uuid";
 import { Tools } from "../../tools/Tools";
 import { join } from "path";
@@ -15,8 +15,7 @@ export class JsonFileStorage implements BaseFileStore {
             mkdirSync(this.fileDir);
         }
         else {
-            let json = require(this.jsonPath);
-            this.Versions = json;
+            this.Versions = JSON.parse(readFileSync(this.jsonPath).toString());
         }
     }
 
@@ -28,7 +27,7 @@ export class JsonFileStorage implements BaseFileStore {
 
     // 获取json文件
     public getJson(): any {
-        this.Versions = require(this.jsonPath);
+        this.Versions = JSON.parse(readFileSync(this.jsonPath).toString());
         return this.Versions;
     }
 
