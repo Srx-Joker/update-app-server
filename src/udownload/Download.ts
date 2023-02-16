@@ -27,7 +27,7 @@ export class UDownload{
         for(let i = 0; i < this.retry; i++){
             // 如果文件不存在则跳过
             if(!this.BaseBinaryStore.has(version)){
-                console.log("Download failed version not found.");
+                // console.log("Download failed version not found.");
                 break;
             }
             
@@ -46,7 +46,7 @@ export class UDownload{
             }
         }
 
-        console.log("Download failed.");
+        // console.log("Download failed.");
 
     }
 }

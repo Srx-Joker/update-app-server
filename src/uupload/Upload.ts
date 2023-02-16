@@ -11,18 +11,19 @@ export class UUpload {
 
     }
     
-    public async upload (version: string, file: Buffer) {
+    public async upload (version: string, file: Buffer) : Promise<boolean>{
         for (let i = 0; i < this.retry; i++) {
             try {
-                await this.BaseFileStore.upload(version, file)
+                let isSuccess = await this.BaseFileStore.upload(version, file)
                 if (this.afterUpload) {
-                    await this.afterUpload(version)
+                     this.afterUpload(version)
                 }
-                break
+                return isSuccess;
             } catch (error) {
-                console.log(error)
+                throw error
             }
         }
+        return false;
     }
 
 

@@ -104,9 +104,6 @@ abstract class UpdateApp {
 
         // 开始上传前回调
         this.BegineUpload?.(version, next, refuse,info);
-
-        // 开始上传
-        await upload.upload(version, file);
     }
 
 
