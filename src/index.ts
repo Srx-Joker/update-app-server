@@ -1,19 +1,21 @@
 
+import { Tools } from "./tools/Tools";
 import { UDownload } from "./udownload/Download";
 import { BaseFileStore } from "./ustorage/BinaryStorage/BaseFileStorage";
+import { JsonFileStorage } from "./ustorage/BinaryStorage/JsonFileStorage";
 import { UUpload } from "./uupload/Upload";
 
-export class UpdateApp {
+abstract class UpdateApp {
     constructor(
         // 文件存储器
         private BaseFileStore: BaseFileStore,
 
         // 下载重试次数
-        private dretry:number = 5,
+        private dretry: number = 5,
 
         // 上传重试次数
-        private uretry:number = 3,
-    ){};
+        private uretry: number = 3,
+    ) { };
 
     /**
      * 下载开始前回调
@@ -21,32 +23,37 @@ export class UpdateApp {
      * @param next 同意下载
      * @param refuse 拒绝下载
      */
-    public BeginDownload?: (version: string, next:(version:string)=>void, refuse:Function) => Promise<void>;
+    abstract  BeginDownload(version: string,  next: (version: string) => void, refuse: Function,info:any):any;
 
     /**
      * 下载完成后回调
      * @param file 文件 | 文件路径 ( 取决于下载器对象的初始化最后一个参数 )
      * @param version 版本号
      */
-    public AfterDownload?: (file: Buffer|string) => Promise<void>;
+    abstract AfterDownload (file: Buffer | string):any;
 
     /**
      * 拒绝下崽回调
      * @param version 版本号
      */
-    public RefuseDownload?: (version: string) => Promise<void>;
+    abstract RefuseDownload (version: string):any;
+
+    /**
+     * 拒绝上传回调
+     */
+    abstract RefuseUpload ():any;
 
     // 上传开始前回调
-    public BegineUpload?: (version: string) => Promise<void>;
+    abstract BegineUpload (version: string , next: (version: string) => void, refuse: Function,info:any):any;
 
     // 上传完成后回调
-    public AfterUpload?: (version: string) => Promise<void>;
-    
+    abstract AfterUpload (version: string):any;
+
 
     // 开始下载 
-    public async start(file:boolean = true): Promise<void> {
+    public async start(file: boolean = true,info?:any): Promise<void> {
         // 初始化下崽器对象
-        const download = new UDownload(this.BaseFileStore,this.dretry,this.AfterDownload,file);
+        const download = new UDownload(this.BaseFileStore, this.dretry, this.AfterDownload, file);
 
         // 获取最新版本号
         const version = this.BaseFileStore.getLatestVersion();
@@ -55,14 +62,14 @@ export class UpdateApp {
          * 同意下载
          * @param nversion 指定下载的版本号
          */
-        const next = (nversion:string) => {
-            if(nversion || this.BaseFileStore.has(nversion)){
+        const next = (nversion: string) => {
+            if (nversion || this.BaseFileStore.has(nversion)) {
                 download.download(nversion);
             }
-            else{
+            else {
                 download.download(version);
             };
-        }  
+        }
 
         // 拒绝下载
         const refuse = () => {
@@ -70,7 +77,7 @@ export class UpdateApp {
         }
 
         // 开始下载
-        await this.BeginDownload?.(version,next,refuse);   
+        await this.BeginDownload?.(version, next, refuse,info);
     }
 
     /**
@@ -78,17 +85,31 @@ export class UpdateApp {
      * @param file 文件
      * @param version 文件版本号
      */
-    public async upload(file: Buffer, version: string): Promise<void> {
+    public async upload(file: Buffer, version: string, info?:any): Promise<void> {
         // 初始化上传器对象
-        const upload = new UUpload(this.BaseFileStore,this.uretry,this.AfterUpload);
+        const upload = new UUpload(this.BaseFileStore, this.uretry, this.AfterUpload);
+
+        /**
+         * 同意上传
+         */
+        const next = (nversion: string) => {
+            upload.upload(nversion, file);
+        }
+
+        // 拒绝上传
+        const refuse = () => {
+            this.RefuseUpload?.();
+        }
+        
 
         // 开始上传前回调
-        this.BegineUpload?.(version);
-        
+        this.BegineUpload?.(version, next, refuse,info);
+
         // 开始上传
-        await upload.upload(version,file);
+        await upload.upload(version, file);
     }
 
 
-
 }
+
+export { BaseFileStore, JsonFileStorage, UpdateApp ,Tools};

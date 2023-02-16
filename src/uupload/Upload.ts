@@ -5,7 +5,7 @@ export class UUpload {
     constructor(
         private BaseFileStore: BaseFileStore,
         private retry: number,
-        private afterUpload?: (version: string) => Promise<void>,
+        private afterUpload?: (version: string) => void
 
     ) {
 

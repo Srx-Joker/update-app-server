@@ -9,7 +9,7 @@ export class UDownload{
         private retry:number,
 
         // 下载完成后回调
-        private AfterDownload?: (file: Buffer|string ) => Promise<void>,
+        private AfterDownload?: (file: Buffer|string ) => void,
 
         // 下载文件还是文件夹
         private file = true,

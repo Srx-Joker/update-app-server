@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\SpyQins\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add -D @type/uuid
+  C:\Program Files\nodejs\node.exe C:\Users\SpyQins\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js publish
 
 PATH: 
   D:\tools\Conan\conan;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\libnvvp;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;"C:/Users/SpyQins/AppData/Local/Android/Sdk\platform-tools;C:/Users/SpyQins/AppData/Local/Android/Sdk\tools;";D:/sources/apache-ant-1.10.12\bin;D:\sources\android-ndk-r14b;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\WireGuard\;C:\Program Files (x86)\NetSarang\Xshell 7\;C:\Program Files (x86)\NetSarang\Xftp 7\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\NVIDIA Corporation\Nsight Compute 2020.3.1\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Users\SpyQins\AppData\Roaming\nvm;C:\Program Files\nodejs;D:\tools\Strawberry\c\bin;D:\tools\Strawberry\perl\site\bin;D:\tools\Strawberry\perl\bin;D:\tools\Git\cmd;C:\Program Files (x86)\Nmap;C:\Program Files (x86)\NetSarang\Xmanager 7\;D:\metasploit-framework\bin\;D:\specialTools\metasploit-framework\bin\;D:\sources\Go\bin;D:\sources\C++\ffmpeg-master-latest-win64-gpl-shared\bin;C:\Program Files\Java\jdk1.8.0_333\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\System32\OpenSSH\;D:\sources\C++\Hikvision\lib;c:\;C:\MinGW\bin;C:\Program Files\OpenSSL-Win64\bin;D:\application\github\Develop\OpencvRtspServer\OpencvRtspServer\libs\Opencv\lib;;C:\Users\SpyQins\AppData\Local\Microsoft\WindowsApps;D:\tools\Microsoft VS Code\bin;C:\Users\SpyQins\AppData\Roaming\npm;C:\Users\SpyQins\.dotnet\tools;D:\sources\opencv\build\x64\vc15\bin;D:\tools\PyCharm 2022.1.3\bin;C:\Users\SpyQins\anaconda3\Scripts;C:\Users\SpyQins\anaconda3\Library\bin;C:\Users\SpyQins\anaconda3\Library\mingw-w64\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\include;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\lib;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.2\libvpp;C:\Users\SpyQins\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\SpyQins\AppData\Local\Programs\Fiddler;C:\Program Files (x86)\Nmap;C:\Program Files\JetBrains\CLion 2022.2.3\bin;;C:\Users\SpyQins\.dotnet\tools;D:\tools\IntelliJ IDEA 2022.2.3\bin;;D:\sources\C++\OpenCV-MinGW-Build\install\x64\mingw\bin;C:\Program Files\JetBrains\CLion 2022.2.3\bin\cmake\win\bin;C:\Users\SpyQins\go\bin;;C:\Users\SpyQins\AppData\Local\Microsoft\WindowsApps;C:\Users\SpyQins\AppData\Local\Pandoc\
@@ -14,30 +14,32 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@type%2fuuid: Not found
-      at Request.params.callback [as _callback] (C:\Users\SpyQins\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66138:18)
-      at Request.self.callback (C:\Users\SpyQins\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140883:22)
-      at Request.emit (node:events:527:28)
-      at Request.<anonymous> (C:\Users\SpyQins\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141855:10)
-      at Request.emit (node:events:527:28)
-      at IncomingMessage.<anonymous> (C:\Users\SpyQins\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141777:12)
-      at Object.onceWrapper (node:events:641:28)
-      at IncomingMessage.emit (node:events:539:35)
-      at endReadableNT (node:internal/streams/readable:1345:12)
-      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+  Error: canceled
+      at Interface.<anonymous> (C:\Users\SpyQins\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:137143:13)
+      at Interface.emit (node:events:527:28)
+      at Interface._ttyWrite (node:readline:1081:16)
+      at ReadStream.onkeypress (node:readline:288:10)
+      at ReadStream.emit (node:events:527:28)
+      at emitKeys (node:internal/readline/utils:358:14)
+      at emitKeys.next (<anonymous>)
+      at ReadStream.onData (node:internal/readline/emitKeypressEvents:61:36)
+      at ReadStream.emit (node:events:527:28)
+      at addChunk (node:internal/streams/readable:315:12)
 
 npm manifest: 
   {
     "name": "update-app",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "",
-    "main": "index.js",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
     "keywords": [],
     "author": "Qins Salvatore",
     "license": "ISC",
     "scripts": {
       "build": "tsc",
-      "test": "jest --config jestconfig.json"
+      "test": "jest --config jestconfig.json",
+      "publish": "npm run build && yalc publish"
     },
     "files": [
       "lib/**/*"
@@ -45,9 +47,12 @@ npm manifest:
     "prepare": "npm run build",
     "devDependencies": {
       "@types/jest": "^29.4.0",
+      "@types/uuid": "^9.0.0",
       "jest": "^29.4.3",
       "ts-jest": "^29.0.5",
-      "typescript": "^4.9.5",
+      "typescript": "^4.9.5"
+    },
+    "dependencies": {
       "uuid": "^9.0.0"
     }
   }
@@ -704,6 +709,11 @@ Lockfile:
     version "2.0.1"
     resolved "https://registry.npmjs.org/@types/stack-utils/-/stack-utils-2.0.1.tgz"
     integrity sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==
+  
+  "@types/uuid@^9.0.0":
+    version "9.0.0"
+    resolved "https://registry.npmjs.org/@types/uuid/-/uuid-9.0.0.tgz"
+    integrity sha512-kr90f+ERiQtKWMz5rP32ltJ/BtULDI5RVO0uavn1HQUOwjx0R1h0rnDYNL0CepF1zL5bSY6FISAfd9tOdDhU5Q==
   
   "@types/yargs-parser@*":
     version "21.0.0"

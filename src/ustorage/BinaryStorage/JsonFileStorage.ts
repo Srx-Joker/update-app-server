@@ -4,12 +4,13 @@ import * as uuid from "uuid";
 import { Tools } from "../../tools/Tools";
 
 
-export class JsonFileStorage extends BaseFileStore {
+export class JsonFileStorage implements BaseFileStore {
+
     
     constructor(private jsonPath: string, private fileDir: string) {
-        super();
+        
         // 初始化文件
-        if(!existsSync(this.jsonPath)){
+        if(!existsSync(__dirname+this.jsonPath)){
             writeFileSync(jsonPath, `
             {
                 "latest": "0.0.0",
@@ -20,7 +21,7 @@ export class JsonFileStorage extends BaseFileStore {
             );
         }
         else{
-            let json = require(this.jsonPath);
+            let json = require(__dirname+this.jsonPath);
             this.Versions = json;
         }
 

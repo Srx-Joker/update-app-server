@@ -1,5 +1,4 @@
 export declare class BaseFileStore {
-    constructor();
 
     // 获取版本号对应的文件
     public get(version: string): Promise<Buffer>;
