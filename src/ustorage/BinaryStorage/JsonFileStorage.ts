@@ -18,7 +18,6 @@ export class JsonFileStorage implements BaseFileStore {
             let json = require(this.jsonPath);
             this.Versions = json;
         }
-
     }
 
     // 版本号对应的文件
@@ -29,6 +28,7 @@ export class JsonFileStorage implements BaseFileStore {
 
     // 获取json文件
     public getJson(): any {
+        this.Versions = require(this.jsonPath);
         return this.Versions;
     }
 

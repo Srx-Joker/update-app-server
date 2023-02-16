@@ -9,7 +9,7 @@ export class UDownload{
         private retry:number,
 
         // 下载完成后回调
-        private AfterDownload?: (file: Buffer|string ) => void,
+        private AfterDownload?: (file: Buffer|string , dist:any) => void,
 
         // 下载文件还是文件夹
         private file = true,
@@ -22,7 +22,7 @@ export class UDownload{
      * @param version 版本号
      * @returns 没有
      */
-    public async download(version: string) {
+    public async download(version: string, dist:any) {
 
         for(let i = 0; i < this.retry; i++){
             // 如果文件不存在则跳过
@@ -41,7 +41,7 @@ export class UDownload{
             }
 
             if(file){
-                await this.AfterDownload?.(file);
+                await this.AfterDownload?.(file,dist);
                 return;        
             }
         }
