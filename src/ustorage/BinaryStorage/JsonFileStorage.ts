@@ -65,7 +65,7 @@ export class JsonFileStorage implements BaseFileStore {
             if (this.Versions.versions[version] == null) {
                 reject(new Error(`version ${version} not found`));
             } else {
-                resolve(this.Versions.versions[version]);
+                resolve(this.fileDir +"\\"+ this.Versions.versions[version]);
             }
         })
     }
@@ -84,7 +84,7 @@ export class JsonFileStorage implements BaseFileStore {
                     reject(err);
                 }
 
-                this.Versions.versions[version] = `${this.fileDir}/${fileName}.apk`;
+                this.Versions.versions[version] = `${fileName}.apk`;
 
                 Tools.compareVersion( this.Versions.latest,version) > 0 && (this.Versions.latest = version);
 
