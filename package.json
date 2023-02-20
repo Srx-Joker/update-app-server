@@ -1,7 +1,7 @@
 {
   "name": "update-app",
   "version": "v1.0.0",
-  "description": "",
+  "description": "APP更新服务端库",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "keywords": [],
