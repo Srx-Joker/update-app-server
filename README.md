@@ -20,7 +20,7 @@
 
 ```typescript
 // 导入一个基础类
-import { UpdateApp , JsonFileStorage } from "update-app"
+import { UpdateApp , JsonFileStorage } from "update-app-server"
 ```
 
 
@@ -33,7 +33,7 @@ import { UpdateApp , JsonFileStorage } from "update-app"
 	1. 在调用Start 或者 Upload 方法的时候可以传一个dist对象 该对象会覆盖整个流程
 
 ```typescript
-import { UpdateApp , JsonFileStorage, Tools} from "update-app"
+import { UpdateApp , JsonFileStorage, Tools} from "update-app-server"
 
 export class UpdateService extends UpdateApp{
     constructor() {

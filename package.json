@@ -1,5 +1,5 @@
 {
-  "name": "update-app",
+  "name": "update-app-server",
   "version": "v1.0.0",
   "description": "APP更新服务端库",
   "main": "lib/index.js",
@@ -11,7 +11,8 @@
   "scripts": {
     "build": "tsc",
     "test": "jest --config jestconfig.json",
-    "publish:debug": "yarn build && yalc publish"
+    "publish:debug": "yarn build && yalc publish",
+    "publish:release": "yarn build && npm publish"
   },
   "files": [
     "lib/**/*"
