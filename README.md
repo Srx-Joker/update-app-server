@@ -57,7 +57,7 @@ export class UpdateService extends UpdateApp{
 
      /**
      * 上传开始回调
-     * @param version 
+     * @param version 上传的版本号
      * @param next 同意上传
      * @param refuse 拒绝上传
      */
@@ -65,6 +65,10 @@ export class UpdateService extends UpdateApp{
         console.log("上传回调");
     }
 
+    /**
+     * 下载结束回调
+     * @param file 如果 Start 第一个参数为 true 返回二进制流 如果为 false 返回文件地址
+    */
     AfterDownload(file: string | Buffer,dist):void { 
         console.log("下载完成")
     }
