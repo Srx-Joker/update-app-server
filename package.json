@@ -1,13 +1,16 @@
 {
   "name": "update-app-server",
-  "version": "v1.0.0",
+  "version": "v1.0.11",
   "description": "APP更新服务端库",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "keywords": [],
   "author": "Qins Salvatore",
   "license": "ISC",
-  "url":"https://github.com/Srx-Joker/update-app.git",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Srx-Joker/update-app-server.git"
+  },
   "scripts": {
     "build": "tsc",
     "test": "jest --config jestconfig.json",
