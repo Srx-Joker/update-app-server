@@ -7,6 +7,7 @@
   "keywords": [],
   "author": "Qins Salvatore",
   "license": "ISC",
+  "url":"https://github.com/Srx-Joker/update-app.git",
   "scripts": {
     "build": "tsc",
     "test": "jest --config jestconfig.json",
