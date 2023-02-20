@@ -51,14 +51,14 @@ abstract class UpdateApp {
 
 
     // 开始下载 
-    public async start(file: boolean = true,dist?:any): Promise<void> {
+    public async start(file: boolean = false,dist?:any): Promise<void> {
         // 初始化下崽器对象
         const download = new UDownload(this.BaseFileStore, this.dretry, this.AfterDownload, file);
 
         // 获取最新版本号
         const version = this.BaseFileStore.getLatestVersion();
 
-        /**
+        /** 
          * 同意下载
          * @param nversion 指定下载的版本号
          */
