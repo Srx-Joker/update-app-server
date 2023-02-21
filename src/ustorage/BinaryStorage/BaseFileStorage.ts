@@ -4,7 +4,7 @@ export declare class BaseFileStore {
     public get(version: string): Promise<Buffer>;
 
     // 获取版本号对应的文件夹
-    public getDir(version: string): Promise<string>;
+    public getDir(version: string):string;
 
     // 上传对应版本文件
     public upload(version: string, file: Buffer): Promise<boolean>;

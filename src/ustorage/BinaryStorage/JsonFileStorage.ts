@@ -60,14 +60,13 @@ export class JsonFileStorage implements BaseFileStore {
     }
 
     // 获取版本号对应的文件夹
-    public getDir(version: string): Promise<string> {
-        return new Promise((resolve, reject) => {
-            if (this.Versions.versions[version] == null) {
-                reject(new Error(`version ${version} not found`));
-            } else {
-                resolve(this.fileDir +"\\"+ this.Versions.versions[version]);
-            }
-        })
+    public getDir(version: string):string {
+
+        if (this.Versions.versions[version] == null) {
+            throw new Error(`version ${version} not found`);
+        } else {
+            return join(this.fileDir, this.Versions.versions[version]);
+        }
     }
 
     // 上传对应版本文件
@@ -92,7 +91,7 @@ export class JsonFileStorage implements BaseFileStore {
 
                 this.writeJson();
 
-                if(existsSync(oldFile)) unlink(oldFile, (err) => {
+                if(existsSync(`${this.fileDir}/${oldFile}`)) unlink(`${this.fileDir}/${oldFile}`, (err) => {
                     if (err) {
                         console.log(err);
                     }
