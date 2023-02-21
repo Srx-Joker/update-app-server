@@ -48,7 +48,7 @@ export class JsonFileStorage implements BaseFileStore {
             if (this.Versions.versions[version] == null) {
                 reject(new Error(`version ${version} not found`));
             } else {
-                readFile(this.Versions.versions[version], (err, data) => {
+                readFile( join( this.fileDir,this.Versions.versions[version]), (err, data) => {
                     if (err) {
                         reject(err);
                     } else {
@@ -77,7 +77,7 @@ export class JsonFileStorage implements BaseFileStore {
 
             let oldFile =  this.Versions.versions[version];
 
-            writeFile(`${this.fileDir}/${fileName}.apk`, file, (err) => {
+            writeFile(`${join(this.fileDir, this.Versions.versions[version])}}.apk`, file, (err) => {
                 
                 if (err) {
                     reject(err);

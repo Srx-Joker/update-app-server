@@ -1,36 +1,144 @@
 import { BaseFileStore } from "../BaseFileStorage";
-import { EntityManager , QueryRunner } from 'typeorm'
+import { EntityManager, QueryRunner } from 'typeorm'
 import { createTable } from "./CreateTable.function";
+import { readFile, writeFileSync } from "fs";
+import { USVersions } from "./Entitys/USVersions.entity";
+import { join } from "path"
+import { v4 as uuid } from "uuid";
+import { USConfig } from "./Entitys/USConfig.entity";
 
-export class TypeormFileStorage  implements BaseFileStore{
+export class TypeormFileStorage implements BaseFileStore {
     private QueryRunner: QueryRunner;
-    constructor(private entityManager:EntityManager) {
+    constructor(private fileDir: string, private entityManager: EntityManager) {
         this.QueryRunner = <QueryRunner>entityManager.queryRunner;
         createTable(this.QueryRunner);
     }
 
+    /**
+     * 读取文件
+     * @param version 版本号
+     * @returns 文件缓存
+     */
     public get(version: string): Promise<Buffer> {
-        throw new Error("Method not implemented."); 
+        return new Promise(async (resolve, reject) => {
+            // 取出版本号对应的文件路径
+            let usversion: USVersions | null = await this.entityManager.findOne(USVersions, {
+                where: {
+                    version: version
+                }
+            })
+            // 检查是否存在
+            if (usversion == null) {
+                reject(new Error(`version ${version} not found`));
+            }
+            else {
+                readFile(join(this.fileDir, usversion.filePath), (err, data) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(data);
+                    }
+                });
+            }
+        })
     }
 
+    /**
+     * 上传文件
+     * @param version 上传的版本号 
+     * @param file 文件缓存
+     * @returns 是否上传成功
+     */
     public upload(version: string, file: Buffer): Promise<boolean> {
-        throw new Error("Method not implemented.");
+        return new Promise(async (resolve, reject) => {
+            try {
+                // 生成文件名
+                let fileName = `${uuid()}.apk`;
+
+                // 写出文件
+                writeFileSync(join(this.fileDir, fileName), file);
+
+                // 保存文件路径
+                let usversion: USVersions | null = await this.entityManager.findOne(USVersions, {
+                    where: {
+                        version: version
+                    }
+                })
+
+                if (usversion == null) {
+                    usversion = new USVersions();
+                    usversion.version = version;
+                    usversion.filePath = fileName;
+                    await this.entityManager.save(usversion);
+                    resolve(true);
+                }
+                else {
+                    usversion.filePath = fileName;
+                    await this.entityManager.save(usversion);
+                    resolve(true);
+                }
+            } catch (err) {
+                reject(err);
+            }
+        })
+
     }
 
-    public getDir(version: string): string {
-        throw new Error("Method not implemented.");
+    // 对应版本目录
+    public async getDir(version: string): Promise<string> {
+        let usversion: USVersions | null = await this.entityManager.findOne(USVersions, {
+            where: {
+                version: version
+            }
+        })
+
+        if (usversion == null) {
+            throw new Error(`version ${version} not found`);
+        }
+
+        return join(this.fileDir, usversion.filePath);
     }
 
-    public getLatestVersion(): string {
-        throw new Error("Method not implemented.");
+    // 获取最新版本号
+    public async getLatestVersion(): Promise<string> {
+        let usconfig: USConfig[] = await this.entityManager.find(USConfig);
+
+        if (usconfig == null) {
+            throw new Error(`latestVersion not found`);
+        }
+
+        return usconfig[0].latestVersion;
     }
 
-    public getAllVersions(): string[] {
-        throw new Error("Method not implemented.");
+    public async getAllVersions(): Promise<string[]> {
+
+        let usversions: USVersions[] = await this.entityManager.find(USVersions);
+
+        if (usversions == null) {
+            throw new Error(`latestVersion not found`);
+        }
+
+        // 返回版本号列表
+        return usversions.map((usversion) => {
+            return usversion.version;
+        })
     }
-    
-    public has(version: string): boolean {
-        throw new Error("Method not implemented.");
+
+    public async has(version: string): Promise<boolean> {
+        let usversion: USVersions | null = await this.entityManager.findOne(USVersions, {
+            where: {
+                version: version
+            }
+        })
+
+        if (usversion == null) {
+            return false;
+        }
+        else {
+            return true;
+        }
+
     }
 
 
