@@ -56,7 +56,7 @@ abstract class UpdateApp {
         const download = new UDownload(this.BaseFileStore, this.dretry, this.AfterDownload, file);
 
         // 获取最新版本号
-        const version = this.BaseFileStore.getLatestVersion();
+        const version = await this.BaseFileStore.getLatestVersion();
 
         /** 
          * 同意下载
