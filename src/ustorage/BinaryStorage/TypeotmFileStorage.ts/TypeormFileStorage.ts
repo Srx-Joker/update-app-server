@@ -1,7 +1,7 @@
 import { BaseFileStore } from "../BaseFileStorage";
 import { DataSource, EntityManager, QueryRunner } from 'typeorm'
 import { createTable } from "./CreateTable.function";
-import { readFile, writeFileSync } from "fs";
+import { readFile, writeFileSync,unlinkSync } from "fs";
 import { USVersions } from "./Entitys/USVersions.entity";
 import { join } from "path"
 import { v4 as uuid } from "uuid";
@@ -82,6 +82,10 @@ export class TypeormFileStorage implements BaseFileStore {
                     resolve(true);
                 }
                 else {
+                    // 删除旧文件
+                    let oldFilePath = join(this.fileDir, usversion.filePath);
+                    unlinkSync(oldFilePath)
+                    
                     usversion.filePath = fileName;
                     await this.entityManager.save(usversion);
                     resolve(true);
