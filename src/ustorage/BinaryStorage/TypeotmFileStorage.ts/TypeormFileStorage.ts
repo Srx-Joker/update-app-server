@@ -17,6 +17,11 @@ export class TypeormFileStorage implements BaseFileStore {
         createTable(this.QueryRunner);
     }
 
+    // 获取所有的实体类,用于创建表
+    public static GetEntitys(){
+        return [USVersions,USConfig];
+    }
+
     /**
      * 读取文件
      * @param version 版本号
