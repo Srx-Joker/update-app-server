@@ -1,5 +1,5 @@
 import { BaseFileStore } from "../BaseFileStorage";
-import { EntityManager, QueryRunner } from 'typeorm'
+import { DataSource, EntityManager, QueryRunner } from 'typeorm'
 import { createTable } from "./CreateTable.function";
 import { readFile, writeFileSync } from "fs";
 import { USVersions } from "./Entitys/USVersions.entity";
@@ -9,8 +9,11 @@ import { USConfig } from "./Entitys/USConfig.entity";
 
 export class TypeormFileStorage implements BaseFileStore {
     private QueryRunner: QueryRunner;
-    constructor(private fileDir: string, private entityManager: EntityManager) {
-        this.QueryRunner = <QueryRunner>entityManager.queryRunner;
+    private entityManager: EntityManager;
+
+    constructor(private fileDir: string, private dataSource: DataSource) {
+        this.QueryRunner = dataSource.createQueryRunner();
+        this.entityManager = this.dataSource.manager;
         createTable(this.QueryRunner);
     }
 

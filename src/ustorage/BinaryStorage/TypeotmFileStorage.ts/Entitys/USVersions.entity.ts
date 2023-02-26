@@ -1,18 +1,26 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 
-@Entity("USVersions")
+@Entity()
 export class USVersions {
 
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column()
+    @Column({
+        type:"varchar",
+        length: 20
+    })
     version!: string;
 
-    @Column()
+    @Column({
+        type:"varchar",
+        length: 255
+    })
     filePath!: string;
 
-    @Column()
+    @Column({
+        type:"date"
+    })
     createTime!: Date;
 
 }

@@ -1,11 +1,14 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 
-@Entity("USConfig")
+@Entity()
 export class USConfig {
 
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column()
+    @Column({
+        type:"varchar",
+        length: 20
+    })
     latestVersion!: string;
 }

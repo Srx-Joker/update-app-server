@@ -1,7 +1,7 @@
 import { Table } from "typeorm"
 import { QueryRunner } from "typeorm/query-runner/QueryRunner"
 
-export function createTable(QueryRunner: QueryRunner): Promise<void> {
+export function createTable(queryRunner: QueryRunner): Promise<void> {
 
     // 创建数据库表
     return new Promise((resolve, reject) => {
@@ -29,9 +29,9 @@ export function createTable(QueryRunner: QueryRunner): Promise<void> {
         }
 
         // UsVersions
-        QueryRunner.hasTable("USVersions").then((hasTable) => {
+        queryRunner.hasTable("USVersions").then((hasTable) => {
             if (!hasTable) {
-                QueryRunner.createTable(
+                queryRunner.createTable(
                     new Table({
                         name: "USVersions",
                         columns: [
@@ -55,7 +55,7 @@ export function createTable(QueryRunner: QueryRunner): Promise<void> {
                             },
                             {
                                 name: "createTime",
-                                type: "datetime",
+                                type: "date",
                                 isNullable: false,
                                 default: "CURRENT_TIMESTAMP",
                             }
@@ -74,9 +74,9 @@ export function createTable(QueryRunner: QueryRunner): Promise<void> {
 
 
         // USConfig
-        QueryRunner.hasTable("USConfig").then((hasTable) => {
+        queryRunner.hasTable("USConfig").then((hasTable) => {
             if (!hasTable) {
-                QueryRunner.createTable(
+                queryRunner.createTable(
                     new Table({
                         name: "USConfig",
                         columns: [

@@ -3,6 +3,7 @@ import { Tools } from "./tools/Tools";
 import { UDownload } from "./udownload/Download";
 import { BaseFileStore } from "./ustorage/BinaryStorage/BaseFileStorage";
 import { JsonFileStorage } from "./ustorage/BinaryStorage/JsonFileStorage";
+import { TypeormFileStorage } from "./ustorage/BinaryStorage/TypeotmFileStorage.ts/TypeormFileStorage";
 import { UUpload } from "./uupload/Upload";
 
 abstract class UpdateApp {
@@ -109,4 +110,4 @@ abstract class UpdateApp {
 
 }
 
-export { BaseFileStore, JsonFileStorage, UpdateApp ,Tools};
+export { BaseFileStore, JsonFileStorage, TypeormFileStorage , UpdateApp ,Tools};
