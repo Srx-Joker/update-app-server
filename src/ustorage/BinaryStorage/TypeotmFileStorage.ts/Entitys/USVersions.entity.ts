@@ -19,7 +19,9 @@ export class USVersions {
     filePath!: string;
 
     @Column({
-        type:"date"
+        type:"date",
+        default: () => 'CURRENT_TIMESTAMP'
+
     })
     createTime!: Date;
 
