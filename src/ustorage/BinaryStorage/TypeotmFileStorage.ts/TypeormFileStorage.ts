@@ -120,6 +120,9 @@ export class TypeormFileStorage implements BaseFileStore {
             throw new Error(`latestVersion not found`);
         }
 
+        if(usconfig[0].isRollback){
+            return usconfig[0].rollbackVersion;
+        }
         return usconfig[0].latestVersion;
     }
 

@@ -11,4 +11,16 @@ export class USConfig {
         length: 20
     })
     latestVersion!: string;
+
+    @Column({
+        type:"boolean",
+        default: false
+    })
+    isRollback!: boolean;
+
+    @Column({
+        type:"varchar",
+        length: 20
+    })
+    rollbackVersion!: string;
 }
