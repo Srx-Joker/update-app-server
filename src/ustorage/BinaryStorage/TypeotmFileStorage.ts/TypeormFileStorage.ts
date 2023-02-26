@@ -14,7 +14,7 @@ export class TypeormFileStorage implements BaseFileStore {
     constructor(private fileDir: string, private dataSource: DataSource) {
         this.QueryRunner = dataSource.createQueryRunner();
         this.entityManager = this.dataSource.manager;
-        createTable(this.QueryRunner);
+        // createTable(this.QueryRunner);
     }
 
     // 获取所有的实体类,用于创建表
