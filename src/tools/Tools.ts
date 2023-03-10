@@ -43,4 +43,24 @@ export class Tools{
 
     }
 
+
+    
+    /**
+     * 检查是否需要更新版本
+     * @param oldv 旧版本
+     * @param newv 新版本
+     * @returns 0:不需要更新 1:需要更新 -1:参数错误
+     */
+    public static compareVersionStringent(oldv : string, newv : string):number{   
+        if(this.parseVersion(oldv) == this.parseVersion(newv)){
+            return 0;
+        }
+        else if(this.parseVersion(oldv) < this.parseVersion(newv)){
+            return 1;
+        }
+        else{
+            return -1;
+        }
+
+    }
 }

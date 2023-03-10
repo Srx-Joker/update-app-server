@@ -18,9 +18,13 @@ export class JsonFileStorage implements BaseFileStore {
             this.Versions = JSON.parse(readFileSync(this.jsonPath).toString());
         }
     }
+    public isRollback(version: string): boolean{
+        return false
+    }
 
     // 版本号对应的文件
     private Versions:any = {
+
             latest: "0.0.0",
             versions: {}
     }

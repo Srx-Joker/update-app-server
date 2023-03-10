@@ -6,8 +6,6 @@ export declare class BaseFileStore {
     // 获取版本号对应的文件夹
     public getDir(version: string):string|Promise<string>;
 
-    
-
     // 上传对应版本文件
     public upload(version: string, file: Buffer): Promise<boolean>;
 
@@ -19,5 +17,8 @@ export declare class BaseFileStore {
 
     // 验证版本号是否存在
     public has(version: string): boolean | Promise<boolean>;
+
+    // 检查是否为回滚状态
+    public isRollback(version: string): boolean | Promise<boolean>;
 
 }

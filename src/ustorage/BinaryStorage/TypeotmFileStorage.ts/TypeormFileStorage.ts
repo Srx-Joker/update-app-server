@@ -1,7 +1,7 @@
 import { BaseFileStore } from "../BaseFileStorage";
 import { DataSource, EntityManager, QueryRunner } from 'typeorm'
 import { createTable } from "./CreateTable.function";
-import { readFile, writeFileSync,unlinkSync ,existsSync} from "fs";
+import { readFile, writeFileSync, unlinkSync, existsSync } from "fs";
 import { USVersions } from "./Entitys/USVersions.entity";
 import { join } from "path"
 import { v4 as uuid } from "uuid";
@@ -16,10 +16,21 @@ export class TypeormFileStorage implements BaseFileStore {
         this.entityManager = this.dataSource.manager;
         // createTable(this.QueryRunner);
     }
+    public async isRollback(version: string): Promise<boolean> {
+
+        return new Promise(async (resolve, reject) => {
+            let usconfig: USConfig[] = await this.entityManager.find(USConfig);
+
+            if (usconfig == null) {
+                reject();
+            }
+            resolve(usconfig[0].isRollback);
+        })
+    }
 
     // 获取所有的实体类,用于创建表
-    public static GetEntitys(){
-        return [USVersions,USConfig];
+    public static GetEntitys() {
+        return [USVersions, USConfig];
     }
 
     /**
@@ -84,8 +95,8 @@ export class TypeormFileStorage implements BaseFileStore {
                 else {
                     // 删除旧文件
                     let oldFilePath = join(this.fileDir, usversion.filePath);
-                    if(existsSync(oldFilePath)) unlinkSync(oldFilePath)
-                    
+                    if (existsSync(oldFilePath)) unlinkSync(oldFilePath)
+
                     usversion.filePath = fileName;
                     await this.entityManager.save(usversion);
                     resolve(true);
@@ -120,7 +131,7 @@ export class TypeormFileStorage implements BaseFileStore {
             throw new Error(`latestVersion not found`);
         }
 
-        if(usconfig[0].isRollback){
+        if (usconfig[0].isRollback) {
             return usconfig[0].rollbackVersion;
         }
         return usconfig[0].latestVersion;
