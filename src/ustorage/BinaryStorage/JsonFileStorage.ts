@@ -19,12 +19,13 @@ export class JsonFileStorage implements BaseFileStore {
         }
     }
     public isRollback(version: string): boolean{
-        return false
+        return this.Versions.isRollback;
     }
 
     // 版本号对应的文件
     private Versions:any = {
-
+            isRollback: false,
+            rollbackVersion: "0.0.0",
             latest: "0.0.0",
             versions: {}
     }
