@@ -18,7 +18,7 @@ export class JsonFileStorage implements BaseFileStore {
             this.Versions = JSON.parse(readFileSync(this.jsonPath).toString());
         }
     }
-    public isRollback(version: string): boolean{
+    public isRollback(): boolean{
         return this.Versions.isRollback;
     }
 

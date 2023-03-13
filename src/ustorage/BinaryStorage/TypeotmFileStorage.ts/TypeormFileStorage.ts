@@ -16,7 +16,7 @@ export class TypeormFileStorage implements BaseFileStore {
         this.entityManager = this.dataSource.manager;
         // createTable(this.QueryRunner);
     }
-    public async isRollback(version: string): Promise<boolean> {
+    public async isRollback(): Promise<boolean> {
 
         return new Promise(async (resolve, reject) => {
             let usconfig: USConfig[] = await this.entityManager.find(USConfig);

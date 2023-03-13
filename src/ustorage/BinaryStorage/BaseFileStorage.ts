@@ -19,6 +19,6 @@ export declare class BaseFileStore {
     public has(version: string): boolean | Promise<boolean>;
 
     // 检查是否为回滚状态
-    public isRollback(version: string): boolean | Promise<boolean>;
+    public isRollback(): boolean | Promise<boolean>;
 
 }
